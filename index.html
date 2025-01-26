@@ -14,7 +14,6 @@
 </head>
 <body>
   <div id="container"></div>
-  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
   <script>
     window.RufflePlayer = window.RufflePlayer || {};
     window.RufflePlayer.config = {
@@ -28,7 +27,9 @@
       openUrlMode: 'confirm',
       base: 'https://this-is-unsafe.invalid/',
     };
-
+  </script>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>
     // https://stackoverflow.com/a/21797381
     function base64ToArrayBuffer(base64) {
       var binaryString = atob(base64);
