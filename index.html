@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Moonlight Ruffle Player Backend</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="connect-src 'none' https://unpkg.com/@ruffle-rs/ruffle">
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <div id="container"></div>
+  <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      // Ruffle configuration options
+      autoplay: 'on',
+      allowNetworking: 'internal',
+      allowScriptAccess: false,
+      showSwfDownload: true,
+      favorFlash: false,
+      polyfills: false,
+      openUrlMode: 'confirm',
+      base: 'https://this-is-unsafe.invalid/',
+    };
+
+    // https://stackoverflow.com/a/21797381
+    function base64ToArrayBuffer(base64) {
+      var binaryString = atob(base64);
+      var bytes = new Uint8Array(binaryString.length);
+      for (var i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+      }
+      return bytes.buffer;
+    }
+
+    const ruffle = window.RufflePlayer.newest()!;
+    const player = ruffle.createPlayer();
+    const container = document.getElementById('container');
+    container.appendChild(player);
+    const rufflePlayer = player.ruffle();
+    rufflePlayer.load({
+      data: base64ToArrayBuffer(document.location.hash.slice(1))
+    });
+  </script>
+</body>
+</html>
