@@ -34,6 +34,7 @@
 
     window.addEventListener("message", (event) => {
       const { type, data } = event.data;
+      if (type !== 'swf') return;
 
       const ruffle = window.RufflePlayer.newest();
       const player = ruffle.createPlayer();
