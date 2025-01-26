@@ -32,24 +32,28 @@
       return bytes.buffer;
     }
 
-    const ruffle = window.RufflePlayer.newest();
-    const player = ruffle.createPlayer();
-    const container = document.getElementById('container');
-    container.appendChild(player);
-    const rufflePlayer = player.ruffle();
-    rufflePlayer.load({
-      data: base64ToArrayBuffer(document.location.hash.slice(1)),
-      
-      // Ruffle configuration options
-      autoplay: 'on',
-      allowNetworking: 'internal',
-      allowScriptAccess: false,
-      showSwfDownload: true,
-      favorFlash: false,
-      polyfills: false,
-      openUrlMode: 'confirm',
-      base: 'https://this-is-unsafe.invalid/',
-    });
+    window.addEventListener("message", (event) => {
+      const { type, data } = event.data;
+
+      const ruffle = window.RufflePlayer.newest();
+      const player = ruffle.createPlayer();
+      const container = document.getElementById('container');
+      container.appendChild(player);
+      const rufflePlayer = player.ruffle();
+      rufflePlayer.load({
+        data,
+        
+        // Ruffle configuration options
+        autoplay: 'on',
+        allowNetworking: 'internal',
+        allowScriptAccess: false,
+        showSwfDownload: true,
+        favorFlash: false,
+        polyfills: false,
+        openUrlMode: 'confirm',
+        base: 'https://this-is-unsafe.invalid/',
+      });
+    }, false);
   </script>
 </body>
 </html>
